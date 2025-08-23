@@ -1,0 +1,443 @@
+/* ========================================
+   THEME TOKENS
+   ======================================== */
+:root{
+  --bg-dark: #0e1215;
+  --bg-darker: #1e2328;
+  --gold: #c8aa6e;
+  --gold-dark: #7a5c29;
+  --gold-border: #463714;
+  --text-light: #f0e6d2;
+  --text-muted: #9a8f72;
+  --shadow-outer: 0 0 6px rgba(0,0,0,0.6);
+  --shadow-outer-strong: 0 0 12px rgba(0,0,0,0.6);
+  --shadow-inset: inset 0 0 3px #000;
+  --font-display: "Beaufort for LoL", "Marcellus SC", serif;
+  --font-ui: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --radius: 6px;
+  --transition-fast: .15s ease;
+}
+
+/* ========================================
+   1) RESET
+   ======================================== */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   2) BODY & SECTION BACKGROUND
+   ======================================== */
+html, body{
+  width: 100%;
+  height: 100vh;
+  font-family: var(--font-ui);
+}
+
+.Section_top{
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: visible;
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+}
+
+/* ========================================
+   3) HEADER CONTENT
+   ======================================== */
+.content{
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-transform: uppercase;
+  z-index: 2;
+  pointer-events: none; /* header text never blocks */
+}
+
+.content h1{
+  color: #fff;
+  font-size: 60px;
+  letter-spacing: 15px;
+}
+
+.content h1 span{ color: var(--gold) }
+
+.content a{
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: #fff;
+  background: #85c1ee;
+  text-decoration: none;
+  border-radius: 10px;
+  pointer-events: auto;
+  transition: background var(--transition-fast);
+}
+
+.content a:hover{ background: #034e88; }
+
+/* ========================================
+   4) SEARCH BAR (LoL THEME)
+   ======================================== */
+#search-bar{
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  padding: 12px 16px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: .3px;
+  color: var(--text-light);
+  background: var(--bg-dark);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  border-image: linear-gradient(to bottom, var(--gold), var(--gold-dark)) 1;
+  box-shadow: inset 0 0 2px #000, 0 0 12px rgba(0,0,0,.35);
+  outline: none;
+  z-index: 600;
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+#search-bar::placeholder{
+  color: var(--text-muted);
+  opacity: 1;
+  letter-spacing: .2px;
+}
+
+#search-bar:hover{
+  background: #14181c;
+  box-shadow: inset 0 0 2px #000, 0 0 10px rgba(0,0,0,.45);
+}
+
+#search-bar:focus{
+  background: #161b1f;
+  box-shadow:
+    inset 0 0 3px #000,
+    0 0 8px rgba(200,170,110,.45),
+    0 0 18px rgba(200,170,110,.25);
+}
+
+/* ========================================
+   5) BUTTONS (LoL THEME)
+   ======================================== */
+button{
+  
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 15px;
+  color: #cdbe91;
+  background: var(--bg-darker);
+  box-shadow: inset 0 0 2px #000;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: linear-gradient(to bottom, var(--gold), var(--gold-dark)) 1;
+  transition: box-shadow .1s ease, background .1s ease, color .1s ease, text-shadow .1s ease;
+}
+
+button:hover{
+  cursor: pointer;
+  text-shadow: 0 0 5px rgba(255,255,255,.5);
+  box-shadow: 0 0 8px 0 rgba(255,255,255,.31);
+  background: linear-gradient(to bottom, var(--bg-darker), #433d2b);
+}
+
+button:active{
+  text-shadow: none;
+  box-shadow: none;
+  color: #cdbe9130;
+}
+
+/* Button wrappers (centered, click-through wrapper) */
+.myButton1,
+.myButton2{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  width: auto;
+  pointer-events: none; /* wrapper doesn't eat clicks */
+}
+
+.myButton1 button,
+.myButton2 button{
+  pointer-events: auto; /* only button takes clicks */
+  display: block;
+  width: 100%;
+}
+
+.myButton1{ top: 340px; }
+.myButton2{ top: 380px; }
+
+/* NOTE: removed global `button { margin-top: 120px; }` to avoid layout side-effects */
+
+/* ========================================
+   6) IMAGE GRIDS & BASE IMAGES
+   ======================================== */
+#image-container{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px 4px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 450px;
+}
+
+#image-container img{
+  display: block;
+  width: 200px;
+  height: auto;
+  margin: 0 auto;
+  /* Removed translate hack in favor of container padding for spacing */
+}
+
+/* Shared LoL-styled image frame */
+#image-container img,
+#result-images img,
+#spotlight img,
+.suggestion img{
+  border: 2px solid var(--gold-border);
+  border-radius: var(--radius);
+  background: var(--bg-darker);
+  box-shadow: var(--shadow-inset), var(--shadow-outer);
+  transform: scale(1);
+  transform-origin: center center;
+  will-change: transform;
+  margin: 0 4px;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+#image-container img:hover,
+#result-images img:hover,
+#spotlight img:hover,
+.suggestion:hover img{
+  transform: scale(1.05);
+  border-color: var(--gold);
+  box-shadow: 0 0 8px var(--gold), 0 0 12px rgba(200,170,110,.4);
+  z-index: 10;
+}
+
+/* ========================================
+   7) RESULT IMAGE STRIP
+   ======================================== */
+#result-images{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+#result-images img{
+  display: none;  /* shown via JS */
+  width: 120px;
+  height: auto;
+}
+
+/* ========================================
+   8) SPOTLIGHT (ENEMY) & RESULTS
+   ======================================== */
+#spotlight{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 28px;
+  text-align: center;
+}
+
+#spotlight .label{
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+#spotlight img{
+  display: none; /* shown via JS */
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: var(--shadow-outer-strong);
+  margin-bottom: 20px;
+}
+
+#result-image-1{
+  /* kept minimal; visibility toggled via JS */
+  display: none;
+  width: 200px;
+  margin: 0 auto 20px;
+}
+
+/* Counters */
+#counters{
+  text-align: center;
+  margin-top: 30px;
+}
+
+#counters .label{
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+#counter-images{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  justify-content: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+#counter-images img{
+  display: none; /* shown via JS */
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--gold-border);
+  border-radius: var(--radius);
+  background: var(--bg-darker);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+#counter-images img:hover{
+  transform: scale(1.05);
+  border-color: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+/* Optional labels are hidden by default (match your behavior) */
+#spotlight .label,
+#counters .label,
+.label{
+  display: none;
+}
+
+.label{
+  font-size: 18px;
+  color: var(--gold);
+  margin: 8px 0;
+  padding: 4px 12px;
+  background: rgba(0,0,0,.7);
+  border-radius: 4px;
+  text-shadow: 0 0 6px #000, 0 0 3px #000;
+}
+
+/* ========================================
+   9) AUTOCOMPLETE DROPDOWN
+   ======================================== */
+.suggestions{
+  position: absolute;
+  z-index: 1000;
+  max-height: 260px;
+  overflow-y: auto;
+  display: none;
+  background: #0a0a0c;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0,0,0,.6);
+  font-family: var(--font-display);
+  pointer-events: auto;
+}
+
+.suggestion{
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #e6e6e6;
+  font-size: 14px;
+}
+
+.suggestion:hover,
+.suggestion.active{
+  background: #1c1c1f;
+  color: var(--text-light);
+}
+
+.suggestion mark{
+  background: transparent;
+  color: #00b3ff;
+  font-weight: 600;
+}
+
+/* ========================================
+   10) FOOTER
+   ======================================== */
+footer{
+  position: relative;
+  z-index: 2;
+  padding: 1rem;
+  margin-top: auto;
+  margin-bottom: 16px;
+  font-size: .9rem;
+  font-style: italic;
+  text-align: center;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(2px);
+  color: white;; 
+}
+
+footer a {
+  color: white;      /* this sets the email link color */
+  text-decoration: none;   /* optional: removes underline */
+}
+
+/* ========================================
+   11) BACKGROUND VIDEO LAYERS
+   ======================================== */
+.bg{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.bg.visible{ opacity: 1; }
+
+/* ========================================
+   12) FLOATING TOOLTIP
+   ======================================== */
+#champ-tooltip{
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(5px, 0);
+  padding: 6px 12px;
+  font: 600 13px var(--font-display);
+  color: var(--text-light);
+  background: var(--bg-dark);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  border-image: linear-gradient(to bottom, var(--gold), var(--gold-dark)) 1;
+  box-shadow: inset 0 0 2px #000, 0 2px 12px rgba(0,0,0,.45);
+  white-space: nowrap;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-fast), visibility var(--transition-fast);
+}
+
+#champ-tooltip.on{
+  opacity: 1;
+  visibility: visible;
+}
