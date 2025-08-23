@@ -517,8 +517,9 @@ function generateImages(forceKey) {
         el.src = picks[i] || "";
         // set proper data-name for tooltip
         if (picks[i]) {
-          const champName = picks[i].replace(/\..+$/, ""); // strip extension
+          const champName = picks[i].split("/").pop().replace(/\..+$/, ""); // strip path + extension
           el.dataset.name = champName.charAt(0).toUpperCase() + champName.slice(1);
+
         }
       }
     });
