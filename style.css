@@ -1,0 +1,538 @@
+/* ========================================
+   THEME TOKENS
+   ======================================== */
+:root{
+  --bg-dark: #0e1215;
+  --bg-darker: #1e2328;
+  --gold: #c8aa6e;
+  --gold-dark: #7a5c29;
+  --gold-border: #463714;
+  --text-light: #f0e6d2;
+  --text-muted: #9a8f72;
+  --win: #7fd1a0;
+  --shadow-outer: 0 0 6px rgba(0,0,0,0.6);
+  --shadow-outer-strong: 0 0 12px rgba(0,0,0,0.6);
+  --shadow-inset: inset 0 0 3px #000;
+  --font-display: "Beaufort for LoL", "Marcellus SC", Georgia, serif;
+  --font-ui: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --radius: 6px;
+  --transition-fast: .15s ease;
+}
+
+/* ========================================
+   1) RESET
+   ======================================== */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+[hidden]{ display: none !important; }
+
+/* ========================================
+   2) BODY & SECTION
+   ======================================== */
+html, body{
+  width: 100%;
+  min-height: 100vh;
+  font-family: var(--font-ui);
+  background: #000;
+  color: var(--text-light);
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+}
+
+.Section_top{
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 100%;
+  padding: 10px 16px 40px;
+  text-align: center;
+}
+
+/* ========================================
+   3) HEADER CONTENT
+   ======================================== */
+.content{
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.content h1{
+  color: #fff;
+  font-size: clamp(26px, 6vw, 60px);
+  letter-spacing: clamp(4px, 1.5vw, 15px);
+}
+
+.content h1 span{ color: var(--gold) }
+
+/* ========================================
+   4) SEARCH BAR + BUTTONS
+   ======================================== */
+.controls{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: clamp(40px, 17vh, 160px);
+}
+
+.search-wrap{
+  position: relative;
+  width: min(340px, 100%);
+  margin-bottom: 44px;
+  z-index: 600;
+}
+
+#search-bar{
+  width: 100%;
+  padding: 12px 16px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: .3px;
+  color: var(--text-light);
+  background: var(--bg-dark);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  border-image: linear-gradient(to bottom, var(--gold), var(--gold-dark)) 1;
+  box-shadow: inset 0 0 2px #000, 0 0 12px rgba(0,0,0,.35);
+  outline: none;
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+#search-bar:hover{
+  background: #14181c;
+  box-shadow: inset 0 0 2px #000, 0 0 10px rgba(0,0,0,.45);
+}
+
+#search-bar:focus{
+  background: #161b1f;
+  box-shadow:
+    inset 0 0 3px #000,
+    0 0 8px rgba(200,170,110,.45),
+    0 0 18px rgba(200,170,110,.25);
+}
+
+.controls > button,
+.role-tabs button,
+.more{
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 15px;
+  color: #cdbe91;
+  background: var(--bg-darker);
+  box-shadow: inset 0 0 2px #000;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: linear-gradient(to bottom, var(--gold), var(--gold-dark)) 1;
+  cursor: pointer;
+  transition: box-shadow .1s ease, background .1s ease, color .1s ease, text-shadow .1s ease;
+}
+
+.controls > button + button{ margin-top: 10px; }
+
+.controls > button:hover,
+.role-tabs button:hover,
+.more:hover{
+  text-shadow: 0 0 5px rgba(255,255,255,.5);
+  box-shadow: 0 0 8px 0 rgba(255,255,255,.31);
+  background: linear-gradient(to bottom, var(--bg-darker), #433d2b);
+}
+
+.controls > button:active,
+.role-tabs button:active,
+.more:active{
+  text-shadow: none;
+  box-shadow: none;
+  color: #cdbe9130;
+}
+
+/* ========================================
+   5) AUTOCOMPLETE DROPDOWN
+   ======================================== */
+.suggestions{
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-height: 260px;
+  overflow-y: auto;
+  display: none;
+  text-align: left;
+  background: #0a0a0c;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0,0,0,.6);
+  font-family: var(--font-display);
+}
+.suggestions.open{ display: block; }
+
+.suggestion{
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #e6e6e6;
+  font-size: 14px;
+}
+
+.suggestion:hover,
+.suggestion.active{
+  background: #1c1c1f;
+  color: var(--text-light);
+}
+
+.suggestion mark{
+  background: transparent;
+  color: #00b3ff;
+  font-weight: 600;
+}
+
+/* ========================================
+   6) CHAMPION GRID & SHARED IMAGE FRAME
+   ======================================== */
+#image-container{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px 12px;
+  width: 100%;
+  max-width: 1050px;
+  margin: 40px auto 0;
+}
+
+.champ-tile,
+.counter-pick{
+  display: block;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.champ-tile:focus-visible,
+.counter-pick:focus-visible{ outline: none; }
+
+.splash{
+  display: block;
+  width: 100%;
+  height: auto; /* no object-fit here: it makes Chrome shrink the art with jagged, glinting edges */
+  border: 2px solid var(--gold-border);
+  border-radius: var(--radius);
+  background: var(--bg-darker);
+  box-shadow: var(--shadow-inset), var(--shadow-outer);
+  /* Own compositing layer (as on the old site): the browser then shrinks the big
+     splash art smoothly instead of leaving jagged, pixelated edges. */
+  transform: scale(1);
+  transform-origin: center center;
+  will-change: transform;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.champ-tile:hover .splash,
+.champ-tile:focus-visible .splash,
+.counter-pick:hover .splash,
+.counter-pick:focus-visible .splash,
+#spotlight .splash:hover{
+  position: relative;
+  transform: scale(1.05);
+  border-color: var(--gold);
+  box-shadow: 0 0 8px var(--gold), 0 0 12px rgba(200,170,110,.4);
+  z-index: 10;
+}
+
+/* ========================================
+   7) RESULT: ENEMY CHAMPION + BEST COUNTERS
+   ======================================== */
+#result{
+  margin-top: 60px;
+}
+
+.label{
+  display: inline-block;
+  margin: 8px 0;
+  padding: 4px 12px;
+  font-size: 18px;
+  color: var(--gold);
+  background: rgba(0,0,0,.7);
+  border-radius: 4px;
+  text-shadow: 0 0 6px #000, 0 0 3px #000;
+}
+
+#spotlight{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#spotlight .splash{
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-outer-strong);
+}
+
+.role-tabs{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+.role-tabs button{ font-size: 13px; padding: 3px 12px; }
+.role-tabs button.active{
+  color: #1a1206;
+  background: linear-gradient(to bottom, var(--gold), #a8873f);
+  text-shadow: none;
+}
+
+#counters{
+  margin-top: 40px;
+}
+
+#counter-images{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 700px;
+  margin: 12px auto 0;
+}
+
+.counter-pick{
+  width: 128px;
+}
+
+.msg{
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  font-size: 14px;
+  color: var(--text-light);
+  background: rgba(0,0,0,.7);
+  border-radius: 4px;
+}
+
+.msg.note{
+  padding: 3px 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.more{
+  display: block;
+  margin: 28px auto 0;
+  font-size: 12px;
+  padding: 3px 12px;
+}
+
+/* ========================================
+   8) ALL-MATCHUPS TABLE (opened with the "All matchups" button)
+   ======================================== */
+#aggregate{
+  width: min(1000px, 100%);
+  margin: 18px auto 0;
+  padding: 18px;
+  text-align: left;
+  background: rgba(14,18,21,.9);
+  border: 2px solid transparent;
+  border-image: linear-gradient(to bottom, var(--gold), var(--gold-dark)) 1;
+  box-shadow: var(--shadow-inset), 0 6px 30px rgba(0,0,0,.6);
+}
+
+.counter-cols{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+.counter-col h3{
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--text-light);
+}
+
+.col-sub{
+  margin: 2px 0 10px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.counter-head,
+.counter-row{
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 62px 52px 62px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 5px 8px;
+}
+
+.counter-head{
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.counter-row{
+  font: inherit;
+  color: var(--text-light);
+  text-align: left;
+  background: rgba(30,35,40,.55);
+  border: 1px solid transparent;
+  border-top-color: rgba(70,55,20,.6);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.counter-row:hover,
+.counter-row:focus-visible{
+  background: #2a2f35;
+  border-color: var(--gold);
+  outline: none;
+}
+
+.champ-ico{
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+}
+
+.champ-name{
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.counter-row .wr,
+.counter-row .lane,
+.counter-row .n{
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.counter-row .wr{ font-weight: 700; color: var(--win); }
+.counter-row .lane,
+.counter-row .n{ font-size: 13px; color: var(--text-muted); }
+
+#aggregate .more{ margin-top: 10px; }
+#aggregate .empty{ padding: 14px 4px; color: var(--text-muted); }
+
+.fineprint{
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   9) FOOTER (credit, data status, legal)
+   ======================================== */
+footer{
+  position: relative;
+  z-index: 2;
+  padding: 14px 16px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--text-light);
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(2px);
+}
+
+footer a{
+  color: inherit;
+  text-decoration: none;
+}
+footer a:hover{ color: var(--gold); }
+
+.status{
+  font-size: 12px;
+  color: var(--gold);
+}
+.status:empty{ display: none; }
+
+.status .sample{
+  margin-left: 10px;
+  padding: 1px 8px;
+  font-weight: 700;
+  color: #1a1206;
+  background: var(--gold);
+  border-radius: 3px;
+}
+
+footer .legal{
+  max-width: 900px;
+  margin: 8px auto 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   11) BACKGROUND VIDEO LAYERS
+   ======================================== */
+.bg{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.bg.visible{ opacity: 1; }
+
+/* ========================================
+   12) FLOATING TOOLTIP
+   ======================================== */
+#champ-tooltip{
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 6px 12px;
+  font: 600 13px var(--font-display);
+  color: var(--text-light);
+  background: var(--bg-dark);
+  border: 2px solid transparent;
+  border-image: linear-gradient(to bottom, var(--gold), var(--gold-dark)) 1;
+  box-shadow: inset 0 0 2px #000, 0 2px 12px rgba(0,0,0,.45);
+  white-space: nowrap;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-fast), visibility var(--transition-fast);
+}
+
+#champ-tooltip.on{
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ========================================
+   13) SMALL SCREENS
+   ======================================== */
+@media (max-width: 900px){
+  #image-container{ grid-template-columns: repeat(4, 1fr); gap: 5px 8px; }
+}
+@media (max-width: 680px){
+  #image-container{ grid-template-columns: repeat(3, 1fr); }
+  .counter-pick{ width: 104px; }
+}
+@media (max-width: 440px){
+  #image-container{ grid-template-columns: repeat(2, 1fr); }
+  .counter-head, .counter-row{ grid-template-columns: 34px minmax(0, 1fr) 54px 44px 50px; gap: 6px; }
+  .champ-ico{ width: 34px; height: 34px; }
+}
